@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bite Size Buffy!</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Adding react via external source, typically would use create-react-app but this is bite size! -->
+  <script src="https://fb.me/react-0.14.6.js"></script>
+  <script src="https://fb.me/react-dom-0.14.6.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.12.1.js"></script>
+</head>
+<body>
+
+<div id="content"></div>
+
+<script type="text/jsx">
+var DATA = {
+  name: 'Buffy Summers',
+  imgURL: 'buffy-with-stake.jpg',
+  hobbyList: ['staking', 'slaying', 'fashion', 'beer'],
+  quoteList: [
+    'The hardest thing in this world is to live in it. Be brave. Live.',
+    'Out. For. A. Walk. Bitch.',
+    'Yes, it’s terribly simple. The good guys are always stalwart and true, the bad guys are easily distinguished by their pointy horns or black hats, and, uh, we always defeat them and save the day. No one ever dies, and everybody lives happily ever after.',
+    'I may be dead, but I’m still pretty.',
+    'No, she was never gone. She was with me. We should have been forever, and I – I let her be dead. She’s really dead. And I killed her.',
+    'Seize the moment, ‘cause tomorrow you might be dead.'
+  ]
+}
+
+var App = React.createClass({
+  render: function(){
+    return (
+      <div>
+        <Profile 
+          name={this.props.profileData.name}
+          imgURL={this.props.profileData.imgURL} />
+        <Hobbies
+          hobbyList={this.props.profileData.hobbyList} />
+        <Quotes
+          quoteList={this.props.profileData.quoteList} />
+      </div>
+    );
+  }
+});
+
+var Profile = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <h1>{this.props.name}</h1>
+        <img src={this.props.imgURL} />
+      </div>
+    );
+  }
+});
+
+var Hobbies = React.createClass({
+  render: function() {
+    var hobbies = this.props.hobbyList.map(function(hobby, index) {
+      return (<li key={index}>{hobby}</li>);
+    });
+
+    return (
+      <div>
+        <h2>My Hobbies:</h2>
+        <ul>
+        {hobbies}
+        </ul>
+      </div>
+    );
+  }
+});
+
+var Quotes = React.createClass({
+  render: function() {
+    var quotes = this.props.quoteList;
+    var quote = quotes[Math.floor(Math.random()*quotes.length)];
+    return (
+      <div className="quote">
+        <p>
+        {quote}
+        </p>
+      </div>
+    );
+  }
+})
+
+ReactDOM.render(<App profileData={DATA} />, document.getElementById('content'));
+</script>
+</body>
+</html>
